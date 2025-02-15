@@ -107,5 +107,158 @@ paths:
                   message:
                     type: string
                     example: "An unexpected error occurred"
+  /medical-note/note/{userID}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Medical Notes
+      summary: Get medical notes for a user
+      description: Retrieves the medical notes associated with a specific user.
+      operationId: getMedicalNote
+      parameters:
+        - name: userID
+          in: path
+          required: true
+          description: The unique identifier of the user
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully retrieved medical notes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        noteID:
+                          type: string
+                          example: "12345-abcde"
+                        userID:
+                          type: string
+                          example: "user123"
+                        doctorID:
+                          type: string
+                          example: "doctor456"
+                        note:
+                          type: string
+                          example: "Patient advised to rest and stay hydrated."
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2024-02-14T12:00:00Z"
+        "400":
+          description: Bad request (e.g., invalid userID format)
+        "404":
+          description: Medical notes not found for the user
+        "500":
+          description: Internal server error
+  /medical-note/actionable-steps/{userID}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Medical Notes
+      summary: Get actionable steps for a user
+      description: Retrieves a list of actionable medical steps assigned to a specific user.
+      operationId: getActionableSteps
+      parameters:
+        - name: userID
+          in: path
+          required: true
+          description: The unique identifier of the user
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully retrieved actionable steps
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        task:
+                          type: string
+                          example: "Take 500 mg Paracetamol"
+                        frequency:
+                          type: string
+                          example: "every 6 hours"
+                        duration:
+                          type: string
+                          example: "3 days"
+                        status:
+                          type: string
+                          example: "pending"
+        "400":
+          description: Bad request (invalid userID format)
+        "404":
+          description: No actionable steps found for the user
+        "500":
+          description: Internal server error
+  /reminders/{userID}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Medical Notes
+      summary: Get reminders for a user
+      description: Retrieves a list of reminders set for a specific user.
+      operationId: getReminders
+      parameters:
+        - name: userID
+          in: path
+          required: true
+          description: The unique identifier of the user
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully retrieved reminders
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        task:
+                          type: string
+                          example: "Take 500 mg Paracetamol"
+                        reminder_times:
+                          type: array
+                          items:
+                            type: string
+                          example: ["08:00 AM", "02:00 PM", "08:00 PM"]
+                        status:
+                          type: string
+                          example: "pending"
+        "400":
+          description: Bad request (invalid userID format)
+        "404":
+          description: No reminders found for the user
+        "500":
+          description: Internal server error
 
 

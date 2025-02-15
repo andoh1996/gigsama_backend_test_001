@@ -10,7 +10,6 @@ router.get('/note/:userID', medicalNoteController.getMedicalNote);
 
 router.get('/actionable-steps/:userID', medicalNoteController.getActionableSteps);
 
-
 router.get('/reminders/:userID', medicalNoteController.getReminders);
 
 module.exports = router;

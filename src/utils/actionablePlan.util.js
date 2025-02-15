@@ -28,15 +28,6 @@ const createActionablePlans = (checklist = [], plan = [], noteID) => {
 };
 
 
-const createReminder  = (reminder) =>{
-    try {
-        
-    } catch (error) {
-        
-    }
-}
-
-
 
 module.exports = {
     createActionablePlans

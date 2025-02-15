@@ -1,0 +1,111 @@
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  /medical-note:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Create a medical note for a user and doctor
+      description: Endpoint to save a medical note with associated user and doctor IDs.
+      operationId: createMedicalNote
+      tags:
+        - Medical Notes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userID
+                - doctorID
+                - note
+              properties:
+                userID:
+                  type: string
+                  example: "user123"
+                  description: "Unique identifier for the user"
+                doctorID:
+                  type: string
+                  example: "doctor123"
+                  description: "Unique identifier for the doctor"
+                note:
+                  type: string
+                  example: "This is a medical note"
+                  description: "Medical note detailing the condition, treatment, or procedure"
+      responses:
+        "200":
+          description: Medical note successfully created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: "Medical note successfully created"
+                  data:
+                    type: object
+                    properties:
+                      userID:
+                        type: string
+                        example: "user123"
+                      doctorID:
+                        type: string
+                        example: "doctor123"
+                      note:
+                        type: string
+                        example: "This is a medical note"
+        "400":
+          description: Bad request, validation errors.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: "Please input your userID, doctorID, and medical note"
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "Please input your userID"
+        "404":
+          description: User or doctor not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: "User or Doctor not found"
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: "An unexpected error occurred"
+
+

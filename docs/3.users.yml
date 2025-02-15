@@ -1,0 +1,103 @@
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  /select-doctor:
+    patch:
+      security:
+        - bearerAuth: []
+      summary: Select a doctor for a user
+      description: Updates the user's record to associate them with a doctor.
+      operationId: selectDoctor
+      tags:
+        - Users Routes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userID
+                - doctorID
+              properties:
+                userID:
+                  type: string
+                  example: "12345abc"
+                doctorID:
+                  type: string
+                  example: "67890xyz"
+      responses:
+        "200":
+          description: Doctor successfully assigned to user.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: "Doctor successfully assigned"
+                  data:
+                    type: object
+                    properties:
+                      userID:
+                        type: string
+                        example: "12345abc"
+                      doctorID:
+                        type: string
+                        example: "67890xyz"
+                      haveDoctor:
+                        type: boolean
+                        example: true
+        "400":
+          description: Bad request, validation errors, or update failure.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: "User ID and Doctor ID are required"
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                      example: "userID is required"
+        "404":
+          description: User or doctor not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: "User not found"
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: "An unexpected error occurred"
+

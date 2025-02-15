@@ -1,0 +1,276 @@
+paths:
+  /auth/register/users:
+    post:
+      tags:
+        - Auth Routes
+      summary: Register a new user
+      description: Endpoint to create a new user account.
+      operationId: AuthRoutes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  example: "John"
+                  description: "User's first name"
+                lastName:
+                  type: string
+                  example: "Doe"
+                  description: "User's last name"
+                email:
+                  type: string
+                  format: email
+                  example: "john.doe@example.com"
+                  description: "User's email address"
+                role:
+                  type: string
+                  enum: ["user"]
+                  example: "user"
+                  description: "user role, default is 'user'"
+                password:
+                  type: string
+                  format: password
+                  example: "StrongPass123!"
+                  description: "User's password"
+              required:
+                - firstName
+                - lastName
+                - email
+                - password
+      responses:
+        "201":
+          description: User successfully registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User registered successfully"
+                  userId:
+                    type: string
+                    example: "12345"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Please input your first name"
+  /auth/register/doctors:
+    post:
+      tags:
+        - Auth Routes
+      summary: Register a new doctor
+      description: Endpoint to create a new doctor account.
+      operationId: registerDoctor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: "Dr."
+                  description: "Doctor's title (e.g., Dr., Prof.)"
+                firstName:
+                  type: string
+                  example: "John"
+                  description: "Doctor's first name"
+                lastName:
+                  type: string
+                  example: "Doe"
+                  description: "Doctor's last name"
+                email:
+                  type: string
+                  format: email
+                  example: "john.doe@example.com"
+                  description: "Doctor's email address"
+                department:
+                  type: string
+                  example: "Cardiology"
+                  description: "Department the doctor belongs to"
+                specialization:
+                  type: string
+                  example: "Heart Surgery"
+                  description: "Doctor's area of specialization"
+                role:
+                  type: string
+                  enum: ["doctor"]
+                  example: "doctor"
+                  description: "User role, default is 'doctor'"
+                password:
+                  type: string
+                  format: password
+                  example: "StrongPass123!"
+                  description: "Doctor's password"
+              required:
+                - title
+                - firstName
+                - lastName
+                - email
+                - department
+                - specialization
+                - password
+      responses:
+        "201":
+          description: Doctor successfully registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Doctor registered successfully"
+                  doctorId:
+                    type: string
+                    example: "12345"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Please input your first name"                  
+  /auth/login/users:
+    post:
+      tags:
+        - Auth Routes
+      summary: User login
+      description: Authenticate a user and return an access token.
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "john.doe@example.com"
+                  description: "User's registered email"
+                password:
+                  type: string
+                  format: password
+                  example: "StrongPass123!"
+                  description: "User's password"
+              required:
+                - email
+                - password
+      responses:
+        "200":
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Login successful"
+                  accessToken:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  refreshToken:
+                    type: string
+                    example: "dGhpcyBpcyBhIHNhbXBsZSByZWZyZXNoIHRva2Vu..."
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Please input email and password"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid email or password"
+  /auth/login/doctors:
+    post:
+      tags:
+        - Auth Routes
+      summary: Doctor login
+      description: Authenticate a doctor and return an access token.
+      operationId: loginDoctor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "dr.john@example.com"
+                  description: "Doctor's registered email"
+                password:
+                  type: string
+                  format: password
+                  example: "StrongPass123!"
+                  description: "Doctor's password"
+              required:
+                - email
+                - password
+      responses:
+        "200":
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Login successful"
+                  accessToken:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  refreshToken:
+                    type: string
+                    example: "dGhpcyBpcyBhIHNhbXBsZSByZWZyZXNoIHRva2Vu..."
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Please input email and password"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid email or password"

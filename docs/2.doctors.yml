@@ -1,0 +1,238 @@
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  /doctors/all:
+    get:
+      tags:
+        - Doctors Route
+      security:
+        - bearerAuth: []
+      summary: Get all doctors
+      description: Retrieve a list of all registered doctors.
+      operationId: getAllDoctors
+      responses:
+        "200":
+          description: A list of doctors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: "12345"
+                      description: "Doctor's unique identifier"
+                    title:
+                      type: string
+                      example: "Dr."
+                      description: "Doctor's title"
+                    firstName:
+                      type: string
+                      example: "John"
+                      description: "Doctor's first name"
+                    lastName:
+                      type: string
+                      example: "Doe"
+                      description: "Doctor's last name"
+                    email:
+                      type: string
+                      format: email
+                      example: "dr.john@example.com"
+                      description: "Doctor's email address"
+                    department:
+                      type: string
+                      example: "Cardiology"
+                      description: "Department the doctor belongs to"
+                    specialization:
+                      type: string
+                      example: "Heart Surgery"
+                      description: "Doctor's area of specialization"
+                    role:
+                      type: string
+                      example: "doctor"
+                      description: "User role"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Internal server error"
+
+  /doctors/detail/{doctorID}:
+    get:
+      tags:
+        - Doctors Route
+      security:
+        - bearerAuth: []
+      summary: Get a specific doctor
+      description: Retrieve details of a specific doctor using their unique ID.
+      operationId: getDoctorById
+      parameters:
+        - name: doctorID
+          in: path
+          required: true
+          description: The unique ID of the doctor
+          schema:
+            type: string
+            example: "12345"
+      responses:
+        "200":
+          description: Doctor details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "12345"
+                    description: "Doctor's unique identifier"
+                  title:
+                    type: string
+                    example: "Dr."
+                    description: "Doctor's title"
+                  firstName:
+                    type: string
+                    example: "John"
+                    description: "Doctor's first name"
+                  lastName:
+                    type: string
+                    example: "Doe"
+                    description: "Doctor's last name"
+                  email:
+                    type: string
+                    format: email
+                    example: "dr.john@example.com"
+                    description: "Doctor's email address"
+                  department:
+                    type: string
+                    example: "Cardiology"
+                    description: "Department the doctor belongs to"
+                  specialization:
+                    type: string
+                    example: "Heart Surgery"
+                    description: "Doctor's area of specialization"
+                  role:
+                    type: string
+                    example: "doctor"
+                    description: "User role"
+        "404":
+          description: Doctor not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Doctor not found"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Internal server error"
+  
+  /doctors/assigned-patients/{doctorID}:
+    get:
+      tags:
+        - Doctors Route
+      security:
+        - bearerAuth: []
+      summary: Get all patients assigned to a speficic doctor.
+      description: Retrieve all  doctor's patients.
+      operationId: getDoctorsWithPatients
+      parameters:
+        - name: doctorID
+          in: path
+          required: true
+          description: The unique ID of the doctor
+          schema:
+            type: string
+            example: "12345"
+      responses:
+        "200":
+          description: A list of doctors with their assigned patients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    doctorId:
+                      type: string
+                      example: "12345"
+                      description: "Doctor's unique identifier"
+                    title:
+                      type: string
+                      example: "Dr."
+                      description: "Doctor's title"
+                    firstName:
+                      type: string
+                      example: "John"
+                      description: "Doctor's first name"
+                    lastName:
+                      type: string
+                      example: "Doe"
+                      description: "Doctor's last name"
+                    email:
+                      type: string
+                      format: email
+                      example: "dr.john@example.com"
+                      description: "Doctor's email address"
+                    department:
+                      type: string
+                      example: "Cardiology"
+                      description: "Doctor's department"
+                    specialization:
+                      type: string
+                      example: "Heart Surgery"
+                      description: "Doctor's specialization"
+                    assignedPatients:
+                      type: array
+                      description: "List of assigned patients"
+                      items:
+                        type: object
+                        properties:
+                          patientId:
+                            type: string
+                            example: "98765"
+                            description: "Patient's unique identifier"
+                          firstName:
+                            type: string
+                            example: "Alice"
+                            description: "Patient's first name"
+                          lastName:
+                            type: string
+                            example: "Smith"
+                            description: "Patient's last name"
+                          email:
+                            type: string
+                            format: email
+                            example: "alice.smith@example.com"
+                            description: "Patient's email address"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Internal server error"

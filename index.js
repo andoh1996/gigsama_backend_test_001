@@ -60,7 +60,7 @@ const options = {
     },
     servers: [
       {
-        url: 'https://telical-business.onrender.com/',
+        url: 'http://localhost:4000',
         description: 'Live Server'
       },
 
@@ -113,7 +113,7 @@ mongoose.connect(DB, {
     useUnifiedTopology: true,
 }).then(() => {
     console.log('DB Connection Success');
-    
+
     require('./src/cronjob/getReminder.cron')
 
 });

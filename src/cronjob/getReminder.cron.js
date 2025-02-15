@@ -14,7 +14,7 @@ const checkReminders = async () => {
     });
 
     for (const reminder of reminders) {
-      console.log(`New Reminder: ${reminder.task}`); // Fixed: Changed `tasks` to `task`
+      console.log(`New Reminder: ${reminder.task}`); 
 
       // Mark reminder as completed to avoid duplicate notifications
       await factory.updateOneItemInDb(ReminderModel, 
